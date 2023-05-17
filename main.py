@@ -12,6 +12,7 @@ from random import randint
 
 #Define our bot
 bot = commands.Bot()
+weather_token = os.environ['WEATHER_API_KEY']
 
 def mailgun_send(email_address, verification_code):
 	return requests.post(
@@ -152,6 +153,8 @@ async def help(ctx):
     embed.set_footer(text=text)
     await ctx.respond(embed=embed)
 
+
+
 @bot.slash_command(name="verify", description="Verifies that you are from KES.")
 async def verify(
   ctx: discord.ApplicationContext, 
@@ -176,11 +179,14 @@ async def verify(
     elif email_check == 200:
       await ctx.respond("Email sent to your inbox. Please check your spam for the code and type it in here.")
 
-@bot.event
-async def on_message(msg):
-  if msg.find(str(code)) != -1 :
-    await message.channel.send("Verified!")
-    user.add_roles("Verified")
+
+@bot.slash_command(name="weather", description="Find the weather in a certain place")
+async def weather(ctx, place: discord.Option(str)):
+  response = requests.request("GET", f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{place}?unitGroup=metric&key={weather_token}&contentType=json")
+  jsonData = response.json()
+  if response.status_code!=200:
+    await ctx.respond('Unexpected Status code: ', response.status_code)
+
 
 #Run our webserver, this is what we will ping
 keep_alive()
