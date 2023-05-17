@@ -132,15 +132,15 @@ async def help(ctx):
         icon_url=
         "https://drive.google.com/uc?export=download&id=1dx4JTP4dK97GY7sDmaqnntK7-manXx0L"
     )
-    embed.add_field(name=";help",
+    embed.add_field(name="/help",
                     value="Displays this help menu.",
                     inline=False)
-    embed.add_field(name=";kes", value="Tests the KESBot.", inline=False)
-    embed.add_field(name=";quote", value="Gives you a quote.", inline=False)
-    embed.add_field(name=";fact",
+    embed.add_field(name="/kes", value="Tests the KESBot.", inline=False)
+    embed.add_field(name="/quote", value="Gives you a quote.", inline=False)
+    embed.add_field(name="/fact",
                     value="Gives out a very cool fact.",
                     inline=False)
-    embed.add_field(name=";joke",
+    embed.add_field(name="/joke",
                     value="Gives out a very lame joke.",
                     inline=False)
     chance = randint(1, 4)
